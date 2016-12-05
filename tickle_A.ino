@@ -1,5 +1,5 @@
 const int pin[3] = {
-  5, 4, 3};  // pin number mortor
+  4, 5, 6};  // pin number mortor
 int val_res = 0;  // resistance value mortor
 int dir = 0;  // stop: 0, forward: 1, reverse: -1
 int SPEED = 220;

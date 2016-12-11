@@ -1,23 +1,22 @@
 const int pin[3] = {3, 4, 5};  // pin number mortor
-const int MEAN = 3;
-int val_hist[3];
-int val_res = 0;  // resistance value mortor
+int val_res = 0;
 int dir = 0;  // stop: 0, forward: 1, reverse: -1
 int SPEED = 230;
 
 void setup() {
   pinMode(pin[0], OUTPUT);
   pinMode(pin[1], OUTPUT);
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 
 void loop() {
-  Serial.flush();
   int val_a = analogRead(0);
   if( isChanged(val_a) ) {
     val_res = averageStream(val_a);
   }
-  Serial.println(val_res);
+  Serial.write('H');
+  Serial.write(highByte(val_res));
+  Serial.write(lowByte(val_res));
 
   if(Serial.available() > 0) {
     dir = Serial.read();
@@ -27,12 +26,12 @@ void loop() {
     digitalWrite(pin[1], LOW);
   }
   else if(dir == 1){
-    analogWrite(pin[2], SPEED);
+    //analogWrite(pin[2], SPEED);
     digitalWrite(pin[0], HIGH);
     digitalWrite(pin[1], LOW);
   }
   else if(dir == 2){
-    analogWrite(pin[2], SPEED);
+    //analogWrite(pin[2], SPEED);
     digitalWrite(pin[0], LOW);
     digitalWrite(pin[1], HIGH);
   }
